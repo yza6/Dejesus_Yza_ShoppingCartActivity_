@@ -77,3 +77,22 @@ namespace dejesus
             FinalTotal = finalTotal;
         }
     }
+
+        class Program
+       {
+             static void Main(string[] args)
+             {
+                 Product[] storemenu = new Product[]
+                 {
+                     new Product (1, "Lipstick", 350, 15, "Cosmetics"),
+                     new Product (2, "Foundation", 500, 10, "Cosmetics"),
+                     new Product (3, "Blush", 267, 5, "Cosmetics"),
+                     new Product (4, "Eyeliner", 100, 20, "Cosmetics"),
+                     new Product (5, "Mascara", 300, 10, "Cosmetics")
+                 };
+
+                 Transaction[] orderHistory = new Transaction[100];
+                 int historyCount = 0;
+
+                 CartItem[] cart = new CartItem[10];
+                 int cartCount = 0;
