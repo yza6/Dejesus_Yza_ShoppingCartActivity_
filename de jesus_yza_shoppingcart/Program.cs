@@ -241,3 +241,59 @@ while (systemRunning)
 
     }
 }
+else if (menuChoice == "3")
+                {
+                    if (cartCount == 0) { Console.WriteLine("Cart is empty."); continue; }
+
+                    double grandTotal = 0;
+                    foreach (var item in cart) 
+                    { 
+                        if (item != null) grandTotal += item.SubTotal; 
+                    }
+
+                    double discount = (grandTotal >= 5000) ? grandTotal * 0.10 : 0;
+                    double finalTotal = grandTotal - discount;
+
+                    Console.WriteLine($"\nTotal: PHP {grandTotal:F2}");
+                    if (discount > 0) Console.WriteLine($"Discount (10%): -PHP {discount:F2}");
+                    Console.WriteLine($"Final Amount Due: PHP {finalTotal:F2}");
+
+                    Console.Write("Enter Payment Amount: ");
+                    if (double.TryParse(Console.ReadLine(), out double payment) && payment >= finalTotal)
+                    {
+                        double change = payment - finalTotal;
+                        string recNo = "REC-" + (1001 + historyCount);
+
+                        Console.WriteLine("\n--- OFFICIAL RECEIPT ---");
+                        Console.WriteLine($"Receipt No: {recNo}");
+                        Console.WriteLine($"Date: {DateTime.Now}");
+                        Console.WriteLine($"Total Paid: PHP {payment:F2}");
+                        Console.WriteLine($"Change: PHP {change:F2}");
+
+                        orderHistory[historyCount++] = new Transaction(recNo, DateTime.Now, finalTotal);
+
+                        foreach (var p in storemenu)
+                        {
+                            if (p.RemainingStock <= 5)
+                            {
+                                Console.WriteLine($"\n[ALERT] {p.Name} stock is low: {p.RemainingStock} left.");
+                            }
+                        }
+                        cartCount = 0; 
+                    }
+                    else { Console.WriteLine("Invalid payment or insufficient funds."); }
+                }
+                else if (menuChoice == "4")
+                {
+                    Console.WriteLine("\n--- TRANSACTION HISTORY ---");
+                    if (historyCount == 0) Console.WriteLine("No records yet.");
+                    for (int i = 0; i < historyCount; i++)
+                    {
+                        Console.WriteLine($"{orderHistory[i].ReceiptNo} | {orderHistory[i].Date} | Total: PHP {orderHistory[i].FinalTotal:F2}");
+                    }
+                }
+                else if (menuChoice == "5") { systemRunning = false; }
+            }
+        }
+    }
+}
