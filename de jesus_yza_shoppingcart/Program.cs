@@ -37,6 +37,10 @@ namespace dejesus
         {
             return Price * qty;
         }
+        public void AddStock(int qty)
+       {
+            RemainingStock += qty;
+       }
 
     }
 
@@ -204,4 +208,36 @@ while (systemRunning)
             }
         }
     }
-    
+    else if (menuChoice == "2")
+    {
+    Console.WriteLine("\n--- YOUR CART ---");
+    if (cartCount == 0) { Console.WriteLine("Cart is empty."); }
+    else
+    {
+        for (int i = 0; i < cartCount; i++)
+        {
+            Console.WriteLine($"{i + 1}. {cart[i].Product.Name} x{cart[i].Quantity} - PHP {cart[i].SubTotal:F2}");
+        }
+        Console.WriteLine("\n[R] Remove Item | [C] Clear Cart | [B] Back");
+        string cartOp = Console.ReadLine().ToUpper();
+
+        if (cartOp == "R")
+        {
+            Console.Write("Enter item number to remove: ");
+            if (int.TryParse(Console.ReadLine(), out int idx) && idx > 0 && idx <= cartCount)
+            {
+                cart[idx - 1].Product.AddStock(cart[idx - 1].Quantity); 
+                for (int i = idx - 1; i < cartCount - 1; i++) { cart[i] = cart[i + 1]; } 
+                cartCount--;
+                Console.WriteLine("Item removed.");
+            }
+        }
+        else if (cartOp == "C")
+        {
+            for (int i = 0; i < cartCount; i++) { cart[i].Product.AddStock(cart[i].Quantity); }
+            cartCount = 0;
+            Console.WriteLine("Cart cleared.");
+        }
+
+    }
+}
