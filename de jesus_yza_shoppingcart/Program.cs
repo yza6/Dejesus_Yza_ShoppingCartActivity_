@@ -150,14 +150,29 @@ namespace dejesus
 
                 Console.WriteLine("Item added to cart!");
 
-                Console.Write("\nAdd more items? (Y/N): ");
-                string choice = Console.ReadLine().ToUpper();
-                if (choice == "N")
-                {
-                    shopping = false;
-                }
+                bool validChoice = false;
+                while (!validChoice) 
+                {   
+                    Console.Write("\nAdd more items? (Y/N): ");
+                    string choice = Console.ReadLine().ToUpper();
+ 
+                    if (choice == "Y")
+                    {
+                        validChoice = true;
+                    }
+                    else if (choice == "N")
+                    {
+                        validChoice = true;
+                        shopping = false;
+                    }
+                    else
+                    { 
+                        Console.WriteLine("Invalid input. Please enter 'Y' for Yes or 'N' for No.");
+                    }
+        
+                }         
             }
-
+            
             Console.WriteLine("\n--- RECEIPT ---");
             double grandTotal = 0;
 
