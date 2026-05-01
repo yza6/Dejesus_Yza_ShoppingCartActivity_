@@ -1,21 +1,10 @@
 # AI Usage
 
-Instead of just having AI write code for me, I used it as a technical resource to help me understand the "why" behind C#. It acted as a tutor that helped me improve my logic. Whenever I got stuck, I asked for examples so I could learn how to build the solutions myself.
+I used AI as a technical resource to help me improve the logic of my code and to better understand how to structure a C# application. Instead of just generating code, I used the AI to walk me through the "why" behind certain programming patterns so I could apply them myself. One of the main areas where I used AI was for fixing the input validation in my "Continue Shopping" prompt. In my first version, any key pressed other than 'N' would count as a 'Yes.' I worked with the AI to implement a while loop and a boolean flag called validChoice. This ensures that the program only moves forward when I get a specific 'Y' or 'N' from the user, which makes the app much more reliable and professional. I developed a Product class to serve as a base for the inventory, allowing for the organized storage of item names, pricing, and stock levels. Additionally, I initialized a data structure to manage the store's products. Since I was new to version control, I used AI as a learning tool to understand the workflow of creating a repository and successfully linking my local project to GitHub, ensuring my progress was safely backed up online.
+I focused on making the program interactive so that a user can actually shop for items. I created a CartItem class to keep track of selected products, quantities, and costs. I consulted AI to brainstorm logic for the shopping loop, which helped me implement a system where the store menu remains visible for continuous browsing. To make the program more professional, I added "safety checks" to handle invalid inputs and included logic to ensure inventory levels are updated accurately as the user shops. I finished my project by making a flowchart that shows exactly how the shop works from start to finish. To make sure everything was okay, I used AI to double-check both my C# code and my flowchart to ensure the logic was correct and that they matched each other. Whenever I got stuck during the project, I used AI as a tutor to show me similar examples so I could learn how to build the code myself.
 
-One of the biggest things I worked on was the "Continue Shopping" and "Menu Choice" prompts. Originally, if a user pressed any key that wasn't 'N', the program just assumed they meant 'Yes'. I worked with the AI to set up a while loop and a validChoice flag so the program only moves forward when it gets a real 'Y' or 'N'. This made the app way more reliable.
-
-I built a Product class to keep track of names, prices, and stock, and a CartItem class for the shopping cart. The AI helped me brainstorm how to make the store menu stay visible so a user can keep browsing without the app resetting.
-
-I added "safety checks" to handle mistakes, like using int.TryParse so the app doesn't crash if someone types a letter instead of a number.
-
-I used AI to double-check that my C# code actually matched my project flowchart. It helped me make sure my logic was sound from start to finish.
-
-Since I was new to GitHub, I used AI to learn the workflow of creating a repository and linking my local project online so my progress was safely backed up.
-
-Questions I Asked:
-
-"How do I make a loop that only accepts 'Y' or 'N' and tells the user if they typed something wrong?"
-"How do I use int.TryParse to validate what a user types?"
-"How do I format a price so it always shows two decimal places?"
-"How can I remove an item from an array without leaving a gap in the middle?"
-"Can you help me fix the errors in my AddStock method?"
+Here are some of the prompts/questions I asked:
+"Help me fix the errors."
+"How do I make a loop that only accepts 'Y' or 'N' and tells the user if their input is invalid?" 
+"How to validate user input using int.TryParse?"
+"How do I format a C# string to show exactly two decimal places for currency?" 
