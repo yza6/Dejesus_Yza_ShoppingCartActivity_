@@ -185,32 +185,95 @@ namespace dejesus
                 }
                 else if (menuChoice == "2")
                 {
-                    if (cartCount == 0) Console.WriteLine("Cart empty.");
+                    Console.WriteLine("\n--- YOUR CART ---");
+                    if (cartCount == 0)
+                    {
+                        Console.WriteLine("Cart is empty.");
+                    }
                     else
                     {
                         for (int i = 0; i < cartCount; i++)
                         {
                             Console.WriteLine($"{i + 1}. {cart[i].GetProduct().GetName()} x{cart[i].GetQuantity()} - PHP {cart[i].GetSubTotal():F2}");
                         }
+
+                        Console.WriteLine("\n[R] Remove Item | [C] Clear Cart | [B] Back");
+                        string cartOp = Console.ReadLine().ToUpper();
+
+                        if (cartOp == "R")
+                        {
+                            Console.Write("Enter item number to remove: ");
+                            if (int.TryParse(Console.ReadLine(), out int idx) && idx > 0 && idx <= cartCount)
+                            {
+                                CartItem itemToRemove = cart[idx - 1];
+                                itemToRemove.GetProduct().AddStock(itemToRemove.GetQuantity());
+
+                                for (int i = idx - 1; i < cartCount - 1; i++)
+                                {
+                                    cart[i] = cart[i + 1];
+                                }
+                                cartCount--;
+                                Console.WriteLine("Item removed and stock returned.");
+                            }
+                        }
+                        else if (cartOp == "C")
+                        {
+                            for (int i = 0; i < cartCount; i++)
+                            {
+                                cart[i].GetProduct().AddStock(cart[i].GetQuantity());
+                            }
+                            cartCount = 0;
+                            Console.WriteLine("Cart cleared.");
+                        }
                     }
                 }
                 else if (menuChoice == "3")
                 {
-                    if (cartCount == 0) continue;
+                    if (cartCount == 0)
+                    {
+                        Console.WriteLine("Cart is empty.");
+                        continue;
+                    }
+
                     double grandTotal = 0;
-                    for (int i = 0; i < cartCount; i++) { grandTotal += cart[i].GetSubTotal(); }
+                    for (int i = 0; i < cartCount; i++)
+                    {
+                        grandTotal += cart[i].GetSubTotal();
+                    }
 
                     double discount = (grandTotal >= 5000) ? grandTotal * 0.10 : 0;
                     double finalTotal = grandTotal - discount;
 
-                    Console.WriteLine($"Final Amount: PHP {finalTotal:F2}");
-                    Console.Write("Enter Payment: ");
+                    Console.WriteLine($"\nTotal: PHP {grandTotal:F2}");
+                    if (discount > 0) Console.WriteLine($"Discount (10%): -PHP {discount:F2}");
+                    Console.WriteLine($"Final Amount Due: PHP {finalTotal:F2}");
+
+                    Console.Write("Enter Payment Amount: ");
                     if (double.TryParse(Console.ReadLine(), out double payment) && payment >= finalTotal)
                     {
+                        double change = payment - finalTotal;
                         string recNo = "REC-" + (1001 + historyCount);
+
+                        Console.WriteLine("\n--- OFFICIAL RECEIPT ---");
+                        Console.WriteLine($"Receipt No: {recNo}");
+                        Console.WriteLine($"Date: {DateTime.Now}");
+                        Console.WriteLine($"Total Paid: PHP {payment:F2}");
+                        Console.WriteLine($"Change: PHP {change:F2}");
+
                         orderHistory[historyCount++] = new Transaction(recNo, DateTime.Now, finalTotal);
+
+                        foreach (var p in storemenu)
+                        {
+                            if (p.GetRemainingStock() <= 5)
+                            {
+                                Console.WriteLine($"\n[ALERT] {p.GetName()} stock is low: {p.GetRemainingStock()} left.");
+                            }
+                        }
                         cartCount = 0;
-                        Console.WriteLine("Payment Successful!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid payment or insufficient funds.");
                     }
                 }
                 else if (menuChoice == "4")
